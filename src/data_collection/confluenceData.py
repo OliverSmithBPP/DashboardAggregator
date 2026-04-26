@@ -21,6 +21,7 @@ confluence = Confluence(
 
 def get_confluence_data(spaceKey):
     if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        print("Getting CONFLUENCE data...")
         pages = confluence.get_all_pages_from_space(spaceKey, expand='body.storage')
         pages_list = []
         for page in pages:

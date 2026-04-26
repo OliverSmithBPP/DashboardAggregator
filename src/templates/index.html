@@ -1,13 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Management Dashboard</title>
-  </head>
-  <body>
-    <div id="top" role="document">
-      <header>
-        <h1>Management Dashboard</h1>
-      </header>
-      
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+</head>
+<body>
+ 
+  <h1>Dashboard</h1>
+ 
+    <h2>JIRA</h2>
+    {% for issue in jira_data %}
+      <div>
+        <strong>{{ issue.key }}</strong> (ID: {{ issue.id }})
+        <br>{{ issue.summary }}
+        <br><a href="{{ issue.url }}">{{ issue.url }}</a>
+      </div>
+      <hr>
+    {% endfor %}
+
+    <h2>CONFLUENCE</h2>
+    {% for page in confluence_data %}
+      <div>
+        <strong>{{ page.title }}</strong> (ID: {{ page.id }})
+        <br>{{ page.body }}
+        <br><a href="{{ page.url }}">{{ page.url }}</a>
+      </div>
+      <hr>
+    {% endfor %}
+ 
+    <h2>ZOHO</h2>
+    {% for ticket in zoho_data %}
+      <div>
+        <strong>{{ ticket.ticketNumber }}</strong> (Status: {{ ticket.status }})
+        <br>{{ ticket.subject }}
+        <br><a href="{{ ticket.webUrl }}">{{ ticket.webUrl }}</a>
+      </div>
+      <hr>
+    {% endfor %}
+
+</body>
 </html>

@@ -24,12 +24,13 @@ def get_access_token():
 
 def get_tickets():
     if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        print("Getting ZOHO data...")
         access_token = get_access_token()
         response = requests.get("https://desk.zoho.eu/api/v1/tickets", headers={
             "Authorization": f"Zoho-oauthtoken {access_token}",
             "orgId": ZOHO_ORG_ID,
         })
-        jsonFileHandling.write_data_to_json(JSON_FILE_NAME, response.json())
+        jsonFileHandling.write_data_to_json(JSON_FILE_NAME, response.json()["data"])
     else:
         print("Zoho data already exists. Skipping creation.")
 

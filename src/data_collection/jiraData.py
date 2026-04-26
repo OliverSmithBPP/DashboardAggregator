@@ -16,6 +16,7 @@ jira = JIRA(options=jiraOptions, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
 
 def get_jira_data_for_project(project):
     if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        print("Getting JIRA data...")
         issues = jira.search_issues(jql_str=f'project = {project}')
         issue_list = []
         for issue in issues:
@@ -32,6 +33,7 @@ def convert_issue_to_dict(issue):
     issue_dict = {
         "id": issue.id,
         "key": issue.key,
+        "url": issue.permalink(),
         "summary": issue.fields.summary,
         "status": issue.fields.status.name,
         "assignee": issue.fields.assignee.displayName if issue.fields.assignee else None,

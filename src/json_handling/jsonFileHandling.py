@@ -15,6 +15,7 @@ def check_file_age(file_path):
         timestamp = os.path.getmtime(file_path)
         file_age = current_time - timestamp
         if file_age > CACHE_TIMEOUT:
+            print(f"File: {file_path} is more than 5 minutes old.")
             return True
         else:
             return False    
