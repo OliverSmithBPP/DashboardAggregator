@@ -1,11 +1,14 @@
 import os
 import requests
+from json_handling import jsonFileHandling
 
 
 ZOHO_CLIENT_ID = os.environ.get("ZOHO_CLIENT_ID")
 ZOHO_CLIENT_SECRET = os.environ.get("ZOHO_CLIENT_SECRET")
 ZOHO_REFRESH_TOKEN = os.environ.get("ZOHO_REFRESH_TOKEN")
 ZOHO_ORG_ID = os.environ.get("ZOHO_ORG_ID")
+
+JSON_FILE_NAME = "zoho_data_json"
 
 
 
@@ -25,5 +28,8 @@ def get_tickets():
         "Authorization": f"Zoho-oauthtoken {access_token}",
         "orgId": ZOHO_ORG_ID,
     })
-    print(response.json())
+    jsonFileHandling.write_data_to_json(JSON_FILE_NAME, response.json())
+
+
+
 
