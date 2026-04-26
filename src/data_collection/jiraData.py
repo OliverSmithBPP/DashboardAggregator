@@ -15,14 +15,17 @@ jira = JIRA(options=jiraOptions, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
 
 
 def get_jira_data_for_project(project):
-    issues = jira.search_issues(jql_str=f'project = {project}')
-    issue_list = []
-    for issue in issues:
-         issue_list.append(convert_issue_to_dict(issue))
-    if len(issue_list) != 0:
-        jsonFileHandling.write_data_to_json(JSON_FILE_NAME, issue_list) 
+    if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        issues = jira.search_issues(jql_str=f'project = {project}')
+        issue_list = []
+        for issue in issues:
+            issue_list.append(convert_issue_to_dict(issue))
+        if len(issue_list) != 0:
+            jsonFileHandling.write_data_to_json(JSON_FILE_NAME, issue_list) 
+        else:
+            print("No JIRA issues found, not writing to JSON file")
     else:
-        print("No JIRA issues found, not writing to JSON file")        
+        print("Jira file already exists. Skipping creation.")        
 
 
 def convert_issue_to_dict(issue):
