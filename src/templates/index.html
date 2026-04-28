@@ -8,9 +8,14 @@
  
   <h1>Dashboard</h1>
  
+    <input id="searchbar" 
+        onkeyup="search_page()" 
+        type="text" name="search" 
+        placeholder="Search...">
+
     <h2>JIRA</h2>
     {% for issue in jira_data %}
-      <div>
+      <div class="item">
         <strong>{{ issue.key }}</strong> (ID: {{ issue.id }})
         <br>{{ issue.summary }}
         <br><a href="{{ issue.url }}">{{ issue.url }}</a>
@@ -20,7 +25,7 @@
 
     <h2>CONFLUENCE</h2>
     {% for page in confluence_data %}
-      <div>
+      <div class="item">
         <strong>{{ page.title }}</strong> (ID: {{ page.id }})
         <br>{{ page.body }}
         <br><a href="{{ page.url }}">{{ page.url }}</a>
@@ -30,13 +35,33 @@
  
     <h2>ZOHO</h2>
     {% for ticket in zoho_data %}
-      <div>
+      <div class="item">
         <strong>{{ ticket.ticketNumber }}</strong> (Status: {{ ticket.status }})
         <br>{{ ticket.subject }}
         <br><a href="{{ ticket.webUrl }}">{{ ticket.webUrl }}</a>
       </div>
       <hr>
     {% endfor %}
+
+
+  <script>
+
+    function search_page() {
+    let input = document.getElementById('searchbar').value.toLowerCase();
+    let items = document.getElementsByClassName('item');
+
+    for (i = 0; i < items.length; i++) {
+        if(items[i].innerHTML.toLowerCase().includes(input))
+            items[i].style.display = "block"
+        else {
+            items[i].style.display = "none"
+        }
+
+    }
+    }
+
+  </script>
+
 
 </body>
 </html>
