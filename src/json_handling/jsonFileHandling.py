@@ -5,8 +5,11 @@ import json
 CACHE_TIMEOUT = 300
 
 def write_data_to_json(file_name, data):
-    with open(f"src/{file_name}", "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=2, ensure_ascii=False)
+    try:
+        with open(f"src/{file_name}", "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
+    except OSError as e:
+        print(f"Exception occurred while trying to write to {file_name}: {e}") 
 
 
 def check_file_age(file_path):
@@ -22,8 +25,11 @@ def check_file_age(file_path):
 
 
 def remove_file(file_path):
-    if os.path.isfile(file_path):
-        os.remove(file_path)
-        print(f"{file_path} deleted successfully.")
-    else:
-        print("File does not exist.")
+    try:
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+            print(f"{file_path} deleted successfully.")
+        else:
+            print("File does not exist.")
+    except OSError as e:
+        print(f"Exception occurred while trying to delete file {file_path}: {e}")

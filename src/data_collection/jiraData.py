@@ -1,5 +1,5 @@
 import os
-from jira import JIRA
+from jira import JIRA, JIRAError
 from json_handling import jsonFileHandling
 
 JIRA_EMAIL = os.environ.get("JIRA_EMAIL")
@@ -15,18 +15,21 @@ jira = JIRA(options=jiraOptions, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
 
 
 def get_jira_data_for_project(project):
-    if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
-        print("Getting JIRA data...")
-        issues = jira.search_issues(jql_str=f'project = {project}')
-        issue_list = []
-        for issue in issues:
-            issue_list.append(convert_issue_to_dict(issue))
-        if len(issue_list) != 0:
-            jsonFileHandling.write_data_to_json(JSON_FILE_NAME, issue_list) 
+    try:
+        if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+            print("Getting JIRA data...")
+            issues = jira.search_issues(jql_str=f'project = {project}')
+            issue_list = []
+            for issue in issues:
+                issue_list.append(convert_issue_to_dict(issue))
+            if len(issue_list) != 0:
+                jsonFileHandling.write_data_to_json(JSON_FILE_NAME, issue_list) 
+            else:
+                print("No JIRA issues found, not writing to JSON file")
         else:
-            print("No JIRA issues found, not writing to JSON file")
-    else:
-        print("Jira file already exists. Skipping creation.")        
+            print("Jira file already exists. Skipping creation.")
+    except (OSError, JIRAError) as e:
+        print(f"Exception occurred while trying to get JIRA data: {e}")    
 
 
 def convert_issue_to_dict(issue):
