@@ -20,15 +20,18 @@ confluence = Confluence(
 
 
 def get_confluence_data(spaceKey):
-    if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
-        print("Getting CONFLUENCE data...")
-        pages = confluence.get_all_pages_from_space(spaceKey, expand='body.storage')
-        pages_list = []
-        for page in pages:
-            pages_list.append(convert_page_to_dict(spaceKey, page))
-        jsonFileHandling.write_data_to_json(JSON_FILE_NAME, pages_list)
-    else:
-        print("Confluence data already exists. Skipping creation.")         
+    try:
+        if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+            print("Getting CONFLUENCE data...")
+            pages = confluence.get_all_pages_from_space(spaceKey, expand='body.storage')
+            pages_list = []
+            for page in pages:
+                pages_list.append(convert_page_to_dict(spaceKey, page))
+            jsonFileHandling.write_data_to_json(JSON_FILE_NAME, pages_list)
+        else:
+            print("Confluence data already exists. Skipping creation.")         
+    except Exception as e:
+        print(f"Exception occurred while trying to get Confluence data: {e}")
 
 
 def convert_page_to_dict(spaceKey, page):

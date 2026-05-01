@@ -13,27 +13,32 @@ JSON_FILE_NAME = "zoho_data_json"
 
 
 def get_access_token():
-    response = requests.post("https://accounts.zoho.eu/oauth/v2/token", data={
-        "grant_type": "refresh_token",
-        "client_id": ZOHO_CLIENT_ID,
-        "client_secret": ZOHO_CLIENT_SECRET,
-        "refresh_token": ZOHO_REFRESH_TOKEN,
-    })
-    return response.json()["access_token"]
+    try:
+        response = requests.post("https://accounts.zoho.eu/oauth/v2/token", data={
+            "grant_type": "refresh_token",
+            "client_id": ZOHO_CLIENT_ID,
+            "client_secret": ZOHO_CLIENT_SECRET,
+            "refresh_token": ZOHO_REFRESH_TOKEN,
+        })
+        return response.json()["access_token"]
+    except Exception as e:
+        print(f"Exception occurred while trying to get Zoho access token: {e}")
 
 
 def get_tickets():
-    if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
-        print("Getting ZOHO data...")
-        access_token = get_access_token()
-        response = requests.get("https://desk.zoho.eu/api/v1/tickets", headers={
-            "Authorization": f"Zoho-oauthtoken {access_token}",
-            "orgId": ZOHO_ORG_ID,
-        })
-        jsonFileHandling.write_data_to_json(JSON_FILE_NAME, response.json()["data"])
-    else:
-        print("Zoho data already exists. Skipping creation.")
-
+    try:
+        if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+            print("Getting ZOHO data...")
+            access_token = get_access_token()
+            response = requests.get("https://desk.zoho.eu/api/v1/tickets", headers={
+                "Authorization": f"Zoho-oauthtoken {access_token}",
+                "orgId": ZOHO_ORG_ID,
+            })
+            jsonFileHandling.write_data_to_json(JSON_FILE_NAME, response.json()["data"])
+        else:
+            print("Zoho data already exists. Skipping creation.")
+    except Exception as e:
+        print(f"Exception occurred while trying to retrieve ticket data from Zoho: {e}")
 
 
 

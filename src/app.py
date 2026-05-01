@@ -11,10 +11,12 @@ json_files = ["jira_data_json", "confluence_data_json", "zoho_data_json"]
 
 
 def load_json(filename):
-    file_path = os.path.join(app.root_path, filename)
-    with open(file_path, 'r') as file:
-        return json.load(file)
-
+    try:
+        file_path = os.path.join(app.root_path, filename)
+        with open(file_path, 'r') as file:
+            return json.load(file)
+    except OSError as e:
+        print(f"Exception occurred while trying to load the json file {filename}: {e}")
 
 @app.route('/')
 def index():
