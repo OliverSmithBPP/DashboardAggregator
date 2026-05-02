@@ -41,7 +41,3 @@ class TestJsonFileHandling(unittest.TestCase):
         result = os.path.isfile(file_path)
 
         assert not result
-
-
-if __name__ == '__main__':
-    unittest.main()

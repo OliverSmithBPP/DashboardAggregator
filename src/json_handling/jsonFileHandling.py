@@ -7,7 +7,6 @@ CACHE_TIMEOUT = 300
 
 def load_json(file_path):
     try:
-        print(file_path)
         with open(file_path, 'r') as file:
             return json.load(file)
     except OSError as e:
