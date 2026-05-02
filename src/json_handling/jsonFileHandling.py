@@ -4,12 +4,22 @@ import json
 
 CACHE_TIMEOUT = 300
 
-def write_data_to_json(file_name, data):
+
+def load_json(file_path):
     try:
-        with open(f"src/{file_name}", "w", encoding="utf-8") as file:
+        print(file_path)
+        with open(file_path, 'r') as file:
+            return json.load(file)
+    except OSError as e:
+        print(f"Exception occurred while trying to load the json file {file_path}: {e}")
+
+
+def write_data_to_json(file_path, data):
+    try:
+        with open(file_path, "w", encoding="utf-8") as file:
             json.dump(data, file, indent=2, ensure_ascii=False)
     except OSError as e:
-        print(f"Exception occurred while trying to write to {file_name}: {e}") 
+        print(f"Exception occurred while trying to write to {file_path}: {e}") 
 
 
 def check_file_age(file_path):

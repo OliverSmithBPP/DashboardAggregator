@@ -9,7 +9,7 @@ CONFLUENCE_API_TOKEN = os.environ.get("JIRA_API_TOKEN")
 
 CONFLUENCE_URL = 'https://projectdashboardexample.atlassian.net/wiki'
 
-JSON_FILE_NAME = "confluence_data_json"
+JSON_FILE_NAME = "src/confluence_data_json"
 
 confluence = Confluence(
     url=CONFLUENCE_URL,
@@ -21,7 +21,7 @@ confluence = Confluence(
 
 def get_confluence_data(spaceKey):
     try:
-        if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        if not os.path.isfile(JSON_FILE_NAME):
             print("Getting CONFLUENCE data...")
             pages = confluence.get_all_pages_from_space(spaceKey, expand='body.storage')
             pages_list = []

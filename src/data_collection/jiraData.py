@@ -7,7 +7,7 @@ JIRA_API_TOKEN = os.environ.get("JIRA_API_TOKEN")
 
 JIRA_SERVER_URL = "https://projectdashboardexample.atlassian.net/"
 
-JSON_FILE_NAME = "jira_data_json"
+JSON_FILE_NAME = "src/jira_data_json"
 
 jiraOptions = {'server': JIRA_SERVER_URL}
 jira = JIRA(options=jiraOptions, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
@@ -16,7 +16,7 @@ jira = JIRA(options=jiraOptions, basic_auth=(JIRA_EMAIL, JIRA_API_TOKEN))
 
 def get_jira_data_for_project(project):
     try:
-        if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        if not os.path.isfile(JSON_FILE_NAME):
             print("Getting JIRA data...")
             issues = jira.search_issues(jql_str=f'project = {project}')
             issue_list = []

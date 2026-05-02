@@ -1,4 +1,3 @@
-import json
 import os
 from flask import Flask, render_template
 from data_collection import jiraData, confluenceData, zohoData
@@ -9,14 +8,6 @@ app = Flask(__name__)
 
 json_files = ["jira_data_json", "confluence_data_json", "zoho_data_json"]
 
-
-def load_json(filename):
-    try:
-        file_path = os.path.join(app.root_path, filename)
-        with open(file_path, 'r') as file:
-            return json.load(file)
-    except OSError as e:
-        print(f"Exception occurred while trying to load the json file {filename}: {e}")
 
 @app.route('/')
 def index():
@@ -30,9 +21,9 @@ def index():
     confluenceData.get_confluence_data("SD")
     zohoData.get_tickets()
 
-    jira_data = load_json('jira_data_json')
-    confluence_data = load_json('confluence_data_json')
-    zoho_data = load_json('zoho_data_json')
+    jira_data = jsonFileHandling.load_json('src/jira_data_json')
+    confluence_data = jsonFileHandling.load_json('src/confluence_data_json')
+    zoho_data = jsonFileHandling.load_json('src/zoho_data_json')
  
     return render_template('index.html', jira_data=jira_data, confluence_data=confluence_data, zoho_data=zoho_data)
 
