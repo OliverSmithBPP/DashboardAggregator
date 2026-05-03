@@ -36,7 +36,7 @@ def convert_issue_to_dict(issue):
     issue_dict = {
         "id": issue.id,
         "key": issue.key,
-        "url": issue.permalink(),
+        "url": issue.permalink() if hasattr(issue, "permalink") else None,
         "summary": issue.fields.summary,
         "status": issue.fields.status.name,
         "assignee": issue.fields.assignee.displayName if issue.fields.assignee else None,
