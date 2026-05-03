@@ -8,7 +8,7 @@ ZOHO_CLIENT_SECRET = os.environ.get("ZOHO_CLIENT_SECRET")
 ZOHO_REFRESH_TOKEN = os.environ.get("ZOHO_REFRESH_TOKEN")
 ZOHO_ORG_ID = os.environ.get("ZOHO_ORG_ID")
 
-JSON_FILE_NAME = "zoho_data_json"
+JSON_FILE_NAME = "src/zoho_data_json"
 
 
 
@@ -27,7 +27,7 @@ def get_access_token():
 
 def get_tickets():
     try:
-        if not os.path.isfile(f"src/{JSON_FILE_NAME}"):
+        if not os.path.isfile(JSON_FILE_NAME):
             print("Getting ZOHO data...")
             access_token = get_access_token()
             response = requests.get("https://desk.zoho.eu/api/v1/tickets", headers={
