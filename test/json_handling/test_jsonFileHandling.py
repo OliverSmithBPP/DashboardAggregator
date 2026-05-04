@@ -5,6 +5,8 @@ from json_handling import jsonFileHandling
 
 class TestJsonFileHandling(unittest.TestCase):
 
+
+    # Check if a file loads properly.
     def test_load_json(self):
         fake_data = {"key": "load_test"}
         file_path = "test/resources/load_data_test"
@@ -17,6 +19,7 @@ class TestJsonFileHandling(unittest.TestCase):
         assert result == fake_data
 
 
+    # Checks writing to a file.
     def test_write_data_to_json(self):
         fake_data = {"key": "write_test"}
         file_path = "test/resources/write_data_test"
@@ -29,6 +32,7 @@ class TestJsonFileHandling(unittest.TestCase):
         assert result == fake_data    
 
 
+    # Checks if we can remove the file.
     def test_remove_file(self):
         fake_data = {"key": "remove_test"}
         file_path = "test/resources/remove_data_test"

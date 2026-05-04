@@ -7,12 +7,14 @@
 <body>
  
   <h1>Dashboard</h1>
- 
+  
+    <!-- search bar functionality for filtering items -->
     <input id="searchbar" 
         onkeyup="search_page()" 
         type="text" name="search" 
         placeholder="Search...">
 
+    <!-- separate blocks for each source as the data and information we want to display is different -->    
     <h2>JIRA</h2>
     {% for issue in jira_data %}
       <div class="item">
@@ -46,6 +48,7 @@
 
   <script>
 
+    // displays the items that are in the search and removes the others
     function search_page() {
     let input = document.getElementById('searchbar').value.toLowerCase();
     let items = document.getElementsByClassName('item');

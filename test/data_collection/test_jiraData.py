@@ -4,12 +4,15 @@ from data_collection import jiraData
 
 class TestJiraData(unittest.TestCase): 
 
+    # We need to mimic the Jira Issue object. The object has nested atrributes so we can't used a dict, instead we create a fake object with SimpleNamespace.
     def test_convert_issue_to_dict(self):
+        # Create the fake issue using SimpleNamespace for the attributes.       
         fake_issue = SimpleNamespace()
         fake_issue.fields = SimpleNamespace()
         fake_issue.fields.status = SimpleNamespace()
         fake_issue.fields.issuetype = SimpleNamespace()
 
+        # Assign values to the fields.
         fake_issue.id = "12345"
         fake_issue.key = "TEST"
         fake_issue.fields.summary = "Test Summary"
